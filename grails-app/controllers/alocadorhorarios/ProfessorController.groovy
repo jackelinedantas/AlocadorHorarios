@@ -123,4 +123,20 @@ class ProfessorController {
 		render horario as JSON
 	}
 
+	def conflitoHorario() {
+		def prof = Professor.get(param.id)
+		def horarios = prof.horarios
+		
+		for(def horario : horarios) {
+			if(horario) {
+				prof.horario = horario
+				flash.message = "Horario cadastrado com exito ${horario.hora_inicio} + ${horario.hora_fim}"
+			}
+			else {
+				flash.message = "Horário indisponível ${params.horario}"
+				return
+			}
+		}
+	}
+
 }
